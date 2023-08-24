@@ -1,4 +1,4 @@
-package com.favouritemanager.TPIntermediare;
+package com.favouritemanager.api;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
