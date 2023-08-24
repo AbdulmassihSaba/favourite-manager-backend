@@ -10,4 +10,9 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
     @Override
     @EntityGraph(attributePaths = "category")
     List<Item> findAll();
+
+    List<Item> findAllByOrderByUpdatedAtAsc();
+
+    List<Item> findAllByOrderByCategoryAsc();
+
 }
