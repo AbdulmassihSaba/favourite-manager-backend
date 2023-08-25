@@ -2,6 +2,7 @@ package com.favouritemanager.api.controller;
 
 import com.favouritemanager.api.dto.FavouriteListItem;
 import com.favouritemanager.api.dto.ItemSortBy;
+import com.favouritemanager.api.dto.ItemSortType;
 import com.favouritemanager.api.service.IFavouriteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,8 +19,10 @@ public class FavouriteContoller {
     private IFavouriteService favouriteService;
 
     @GetMapping("/get")
-    List<FavouriteListItem> findAll(@RequestParam ItemSortBy sortBy) {
-        return favouriteService.findAll(sortBy);
+    List<FavouriteListItem> findAll(@RequestParam(required = false) ItemSortBy sortBy,
+                                    @RequestParam(required = false) String category,
+                                    @RequestParam(required = false) ItemSortType sortType) {
+        return favouriteService.findAll(sortBy, sortType, category);
     }
 
 }
