@@ -24,7 +24,6 @@ public class FavouriteService implements IFavouriteService {
     public List<FavouriteListItem> findAll(ItemSortBy sortBy, ItemSortType sortType, Long categoryId) {
 
         List<Item> list = favouriteRepository.findAll();
-
         if(sortBy == null)
         {
             if(categoryId == null)
