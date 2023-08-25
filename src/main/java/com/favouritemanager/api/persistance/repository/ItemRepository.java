@@ -16,10 +16,10 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
     List<Item> findAllByOrderByUpdatedAtDesc();
     List<Item> findAllByOrderByCategoryNameAsc();
     List<Item> findAllByOrderByCategoryNameDesc();
-    List<Item> findByCategoryNameOrderByUpdatedAtDesc(String categoryName);
-    List<Item> findByCategoryNameOrderByUpdatedAtAsc(String categoryName);
-    List<Item> findByCategoryNameOrderByCategoryNameDesc(String categoryName);
-    List<Item> findByCategoryNameOrderByCategoryNameAsc(String categoryName);
-    List<Item> findByCategoryName(String categoryName);
+    List<Item> findByCategoryIdOrderByUpdatedAtDesc(Long categoryId);
+    List<Item> findByCategoryIdOrderByUpdatedAtAsc(Long categoryId);
+    List<Item> findByCategoryIdOrderByCategoryNameDesc(Long categoryId);
+    List<Item> findByCategoryIdOrderByCategoryNameAsc(Long categoryId);
+    List<Item> findByCategoryId(Long categoryId);
 
 }

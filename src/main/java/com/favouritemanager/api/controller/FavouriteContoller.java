@@ -20,9 +20,9 @@ public class FavouriteContoller {
 
     @GetMapping("/get")
     List<FavouriteListItem> findAll(@RequestParam(required = false) ItemSortBy sortBy,
-                                    @RequestParam(required = false) String category,
+                                    @RequestParam(required = false) Long categoryId,
                                     @RequestParam(required = false) ItemSortType sortType) {
-        return favouriteService.findAll(sortBy, sortType, category);
+        return favouriteService.findAll(sortBy, sortType, categoryId);
     }
 
 }

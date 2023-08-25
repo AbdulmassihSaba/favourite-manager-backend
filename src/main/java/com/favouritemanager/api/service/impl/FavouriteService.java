@@ -21,19 +21,19 @@ public class FavouriteService implements IFavouriteService {
 
     // The method findAll exists already, override allows to reconfigure it
     @Override
-    public List<FavouriteListItem> findAll(ItemSortBy sortBy, ItemSortType sortType, String category) {
+    public List<FavouriteListItem> findAll(ItemSortBy sortBy, ItemSortType sortType, Long categoryId) {
 
         List<Item> list = favouriteRepository.findAll();
 
         if(sortBy == null)
         {
-            if(category == null)
+            if(categoryId == null)
                 list = favouriteRepository.findAll();
             else
-                list = favouriteRepository.findByCategoryName(category);
+                list = favouriteRepository.findByCategoryId(categoryId);
         }
         else if(sortBy.equals(ItemSortBy.category)) {
-            if(category == null) {
+            if(categoryId == null) {
                 if(sortType == ItemSortType.ASC)
                     list = favouriteRepository.findAllByOrderByCategoryNameAsc();
                 else
@@ -41,12 +41,12 @@ public class FavouriteService implements IFavouriteService {
             }
             else {
                 if(sortType == ItemSortType.ASC)
-                    list = favouriteRepository.findByCategoryNameOrderByCategoryNameDesc(category);
+                    list = favouriteRepository.findByCategoryIdOrderByCategoryNameDesc(categoryId);
                 else
-                    list = favouriteRepository.findByCategoryNameOrderByCategoryNameAsc(category);
+                    list = favouriteRepository.findByCategoryIdOrderByCategoryNameAsc(categoryId);
             }
         } else if (sortBy.equals(ItemSortBy.updateTime)) {
-            if(category == null) {
+            if(categoryId == null) {
                 if(sortType == ItemSortType.ASC)
                     list = favouriteRepository.findAllByOrderByUpdatedAtAsc();
                 else
@@ -54,9 +54,9 @@ public class FavouriteService implements IFavouriteService {
             }
             else {
                 if(sortType == ItemSortType.ASC)
-                    list = favouriteRepository.findByCategoryNameOrderByUpdatedAtAsc(category);
+                    list = favouriteRepository.findByCategoryIdOrderByUpdatedAtAsc(categoryId);
                 else
-                    list = favouriteRepository.findByCategoryNameOrderByUpdatedAtDesc(category);
+                    list = favouriteRepository.findByCategoryIdOrderByUpdatedAtDesc(categoryId);
             }
 
         }
