@@ -1,6 +1,7 @@
 package com.favouritemanager.api.service.impl;
 
 import com.favouritemanager.api.dto.*;
+import com.favouritemanager.api.exception.BadRequestException;
 import com.favouritemanager.api.persistance.entity.Category;
 import com.favouritemanager.api.persistance.entity.Item;
 import com.favouritemanager.api.persistance.repository.CategoryRepository;
@@ -70,7 +71,9 @@ public class FavouriteService implements IFavouriteService {
     }
     @Override
     public FavouriteItem addItem(FavouriteDefinition item) {
-        Category category = categoryRepository.findById(item.getCategoryId()).orElseThrow();
+        Category category =
+                categoryRepository.findById(item.getCategoryId()).orElseThrow(() -> new BadRequestException("The " +
+                        "selected category was not found"));
         Item savedItem = favouriteRepository.save(new Item(item.getId(), category, item.getLink(), item.getLabel(),
                 Time.getCurrentDateTime()));
         return new FavouriteItem(savedItem.getId(), category.getName(), savedItem.getLink(), savedItem.getLabel(),
