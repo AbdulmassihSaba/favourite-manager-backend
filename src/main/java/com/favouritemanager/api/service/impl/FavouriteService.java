@@ -1,12 +1,12 @@
 package com.favouritemanager.api.service.impl;
 
-import com.favouritemanager.api.dto.FavouriteListItem;
-import com.favouritemanager.api.dto.ItemSortBy;
-import com.favouritemanager.api.dto.ItemSortType;
+import com.favouritemanager.api.dto.*;
 import com.favouritemanager.api.persistance.entity.Category;
 import com.favouritemanager.api.persistance.entity.Item;
+import com.favouritemanager.api.persistance.repository.CategoryRepository;
 import com.favouritemanager.api.persistance.repository.ItemRepository;
 import com.favouritemanager.api.service.IFavouriteService;
+import com.favouritemanager.api.utils.Time;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +18,8 @@ import java.util.List;
 public class FavouriteService implements IFavouriteService {
     @Autowired
     private ItemRepository favouriteRepository;
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     // The method findAll exists already, override allows to reconfigure it
     @Override
@@ -65,5 +67,13 @@ public class FavouriteService implements IFavouriteService {
                 .map(entity -> new FavouriteListItem(entity.getId(), entity.getCategory().getName(), entity.getLink(),
                         entity.getUpdatedAt()))
                 .toList();
+    }
+    @Override
+    public FavouriteItem addItem(FavouriteDefinition item) {
+        Category category = categoryRepository.findById(item.getCategoryId()).orElseThrow();
+        Item savedItem = favouriteRepository.save(new Item(item.getId(), category, item.getLink(), item.getLabel(),
+                Time.getCurrentDateTime()));
+        return new FavouriteItem(savedItem.getId(), category.getName(), savedItem.getLink(), savedItem.getLabel(),
+                savedItem.getUpdatedAt());
     }
 }

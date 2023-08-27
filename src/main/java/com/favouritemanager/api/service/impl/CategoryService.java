@@ -1,6 +1,7 @@
 package com.favouritemanager.api.service.impl;
 
 import com.favouritemanager.api.dto.CategoryListItem;
+import com.favouritemanager.api.persistance.entity.Category;
 import com.favouritemanager.api.persistance.repository.CategoryRepository;
 import com.favouritemanager.api.service.ICategoryService;
 import jakarta.transaction.Transactional;
@@ -23,4 +24,5 @@ public class CategoryService implements ICategoryService {
                 .map(category -> new CategoryListItem(category.getId(), category.getName()))
                 .toList();
     }
+
 }

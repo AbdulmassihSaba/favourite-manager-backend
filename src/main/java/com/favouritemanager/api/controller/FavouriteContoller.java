@@ -1,14 +1,9 @@
 package com.favouritemanager.api.controller;
 
-import com.favouritemanager.api.dto.FavouriteListItem;
-import com.favouritemanager.api.dto.ItemSortBy;
-import com.favouritemanager.api.dto.ItemSortType;
+import com.favouritemanager.api.dto.*;
 import com.favouritemanager.api.service.IFavouriteService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,5 +19,10 @@ public class FavouriteContoller {
                                     @RequestParam(required = false) ItemSortType sortType) {
         return favouriteService.findAll(sortBy, sortType, categoryId);
     }
+    @PostMapping("/add")
+    FavouriteItem addItem(@RequestBody FavouriteDefinition item) {
+        return favouriteService.addItem(item);
+    }
+
 
 }
