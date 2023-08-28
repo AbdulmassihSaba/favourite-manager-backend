@@ -2,9 +2,12 @@ package com.favouritemanager.api.persistance.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 @Entity
 @Table(name = "item")
+//@Table(@UniqueConstraint(columnNames = {"", ""}))
 @Getter
 @Setter
 @ToString
@@ -18,6 +21,7 @@ public class Item {
     private Long id;
     @ManyToOne(optional = false, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     //@JoinColumn(name = "category_id")
+    //@Fetch(FetchMode.JOIN)
     @JoinColumn(referencedColumnName = "id", nullable = false)
     private Category category;
     @Column

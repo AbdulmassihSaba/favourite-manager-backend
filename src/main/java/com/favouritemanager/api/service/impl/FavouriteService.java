@@ -5,8 +5,9 @@ import com.favouritemanager.api.exception.BadRequestException;
 import com.favouritemanager.api.persistance.entity.Category;
 import com.favouritemanager.api.persistance.entity.Item;
 import com.favouritemanager.api.persistance.repository.CategoryRepository;
-import com.favouritemanager.api.persistance.repository.ItemRepository;
+import com.favouritemanager.api.persistance.repository.FavouriteRepository;
 import com.favouritemanager.api.service.IFavouriteService;
+import com.favouritemanager.api.utils.DTOHelper;
 import com.favouritemanager.api.utils.Time;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +19,12 @@ import java.util.List;
 @Transactional
 public class FavouriteService implements IFavouriteService {
     @Autowired
-    private ItemRepository favouriteRepository;
+    private FavouriteRepository favouriteRepository;
     @Autowired
     private CategoryRepository categoryRepository;
 
+    @Autowired
+    private DTOHelper dtoHelper;
     // The method findAll exists already, override allows to reconfigure it
     @Override
     public List<FavouriteListItem> findAll(ItemSortBy sortBy, ItemSortType sortType, Long categoryId) {
@@ -65,8 +68,7 @@ public class FavouriteService implements IFavouriteService {
 
         return list
                 .stream()
-                .map(entity -> new FavouriteListItem(entity.getId(), entity.getCategory().getName(), entity.getLink(),
-                        entity.getUpdatedAt()))
+                .map(entity -> dtoHelper.toFavouriteListItem(entity))
                 .toList();
     }
     @Override
@@ -76,7 +78,6 @@ public class FavouriteService implements IFavouriteService {
                         "selected category was not found"));
         Item savedItem = favouriteRepository.save(new Item(item.getId(), category, item.getLink(), item.getLabel(),
                 Time.getCurrentDateTime()));
-        return new FavouriteItem(savedItem.getId(), category.getName(), savedItem.getLink(), savedItem.getLabel(),
-                savedItem.getUpdatedAt());
+        return dtoHelper.toFavouriteItem(savedItem);
     }
 }
