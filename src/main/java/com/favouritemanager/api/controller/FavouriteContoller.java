@@ -28,5 +28,10 @@ public class FavouriteContoller {
         return favouriteService.addItem(item);
     }
 
+    @DeleteMapping("/delete")
+    void deleteItems(@RequestParam String ids) {
+        favouriteService.deleteItems(ids);
+    }
+
 
 }

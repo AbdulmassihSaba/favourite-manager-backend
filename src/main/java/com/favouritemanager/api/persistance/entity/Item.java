@@ -19,7 +19,8 @@ public class Item {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
     private Long id;
-    @ManyToOne(optional = false, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    //cascade = CascadeType.ALL
     //@JoinColumn(name = "category_id")
     //@Fetch(FetchMode.JOIN)
     @JoinColumn(referencedColumnName = "id", nullable = false)

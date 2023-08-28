@@ -13,6 +13,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -79,5 +80,13 @@ public class FavouriteService implements IFavouriteService {
         Item savedItem = favouriteRepository.save(new Item(item.getId(), category, item.getLink(), item.getLabel(),
                 Time.getCurrentDateTime()));
         return dtoHelper.toFavouriteItem(savedItem);
+    }
+
+    @Override
+    public void deleteItems(String ids) {
+        Arrays.stream(ids.split(","))
+                .map(String::trim)
+                .map(Long::valueOf)
+                .forEach(id -> favouriteRepository.deleteById(id));
     }
 }
